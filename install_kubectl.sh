@@ -6,6 +6,7 @@ set -eo pipefail
 
 main_url="https://storage.googleapis.com/kubernetes-release/release/"
 latest_vers_url="${main_url}stable.txt"
+temp_dir="/tmp"
 
 
 # check operating system:
@@ -15,4 +16,48 @@ if [ "${os_name}" = "linux" ]; then
   if echo "${arch}" | grep -q -E 'x86_64'
   then
     platform="linux64"
-  elif
+  elif echo "${arch}" | grep -q -E '(x86)|(i686)'
+  then
+    plafrorm="linux32"
+  elif echo "${arch}" | grep -q -E 'ppc64le'
+  then
+    plafrorm="ppc64le"
+  else
+    echo ">> Unsupported Linux arch: ${arch}. Exiting..."
+    exit 1
+  fi
+else
+  echo ">> Unrecognized Linux platform detected: ${os_name}. Exiting..."
+  exit 1
+fi
+
+# check if curl is present on the system:
+if ! command -v curl &> /dev/null; then
+  echo ">> curl could not be found. Exiting..."
+  exit 1
+fi
+
+# make sure to always use sudo, if not running script as root:
+[ "$(id -u)" -ne 0 ] && SUDO=sudo || SUDO=""
+
+# download the kubectl binary:
+cd ${temp_dir} || exit
+echo ">> Downloading kubectl $(curl -s ${latest_ver_url}) ..."
+if curl -s -LO "${main_url}"$(curl -s ${latest_ver_url})/bin/linux/amd64/kubectl"; then
+  echo ">> Download complete."
+else
+  echo ">> Download failed. Please check your network connection. Exiting..."
+  exit 1
+fi
+
+# make the kubectl binary executable
+chmod +x ./kubectl
+
+# move the binary from the current working folder in PATH:
+if $SUDO sudo mv ./kubectl /usr/local/bin/kubectl; then
+  echo ">> Install complete."
+  exit 0
+else
+  echo ">> Install failed!"
+  exit 1
+fi
