@@ -7,6 +7,7 @@ set -eo pipefail
 main_url="https://storage.googleapis.com/kubernetes-release/release/"
 latest_vers_url="${main_url}stable.txt"
 temp_dir="/tmp"
+path_dir="/usr/local/bin/"
 
 
 # check operating system:
@@ -19,6 +20,8 @@ if [ "${os_name}" = "linux" ]; then
   elif echo "${arch}" | grep -q -E '(x86)|(i686)'
   then
     plafrorm="linux32"
+    echo ">> Running linux32, please run 64 bit version. Exiting..."
+    exit 1
   elif echo "${arch}" | grep -q -E 'ppc64le'
   then
     plafrorm="ppc64le"
@@ -54,7 +57,7 @@ fi
 chmod +x ./kubectl
 
 # move the binary from the current working folder in PATH:
-if $SUDO sudo mv ./kubectl /usr/local/bin/kubectl; then
+if $SUDO sudo mv ./kubectl ${path_dir}kubectl; then
   echo ">> Install complete."
   exit 0
 else
