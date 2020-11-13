@@ -17,6 +17,9 @@ https://en.wikipedia.org/wiki/Python_Software_Foundation_License
 https://docs.python.org/3/license.html
 """
 
+# TODO: Implement color print based on message type - green for ok,
+#  red for error messages and blue for informational messages
+
 __author__ = 'Petyo Kunchev'
 __version__ = '1.0.0'
 __maintainer__ = 'Petyo Kunchev'
