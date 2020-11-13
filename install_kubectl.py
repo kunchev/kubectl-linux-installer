@@ -32,7 +32,6 @@ import urllib.error
 import shutil
 import subprocess
 from sys import platform
-from requests.models import Response
 
 try:
     import requests
