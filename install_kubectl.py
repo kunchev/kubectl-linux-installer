@@ -61,10 +61,12 @@ class KubectlInstallation:
 
     @property
     def running_os(self) -> object:
+        """:return: the running operating system"""
         return platform
 
     @property
     def running_id(self) -> object:
+        """:return: the running user ID"""
         return os.getuid()
 
     def get_kubectl(self):
