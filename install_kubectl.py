@@ -35,7 +35,7 @@ class KubectlInstallation:
     def get_kubectl(self) -> object:
         """Download and install the latest kubectl for Linux."""
         # 1. download kubectl to temporary location
-        print(f'[STEP 1]: Beginning file download of the latest kubectl version'
+        print(f'[STEP 1]: Starting download of the latest kubectl version'
               f' \'{self.latest_kube.text}\' from:\n{self.url}')
         try:
             urllib.request.urlretrieve(self.url, self.templocation)
@@ -46,6 +46,17 @@ class KubectlInstallation:
         print(f'[STEP 2]: Making the downloaded binary file \''
               f'{self.templocation}\' executable (mode 775)')
         os.chmod(self.templocation, 0o775)
+
+        # 3. move the downloaded file to the desired bin folder
+        print(f'[STEP 3]: Moving \'{self.templocation}\' to the \''
+              f'{self.binlocation}\' destination')
+        shutil.move(self.templocation, self.binlocation)
+
+        # 4. verify the installed version of kubectl
+        print('[STEP 4]: Verifying the kubectl installed version:')
+        verify_kubectl_version = subprocess.run([self.binlocation, 'version',
+                                                 '--client'])
+        print(f'[STEP 5]: Exit code: {verify_kubectl_version.returncode}')
 
 
 def main():
