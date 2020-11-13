@@ -37,7 +37,7 @@ try:
     import requests
     from requests.models import Response
 except ModuleNotFoundError as err:
-    print('Please install the required modules.')
+    print('pip3 install -r requirements.txt')
     exit(err)
 
 
