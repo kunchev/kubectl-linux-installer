@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
-
-# Install the latest kubectl binary in Linux
-
 set -eo pipefail
 
+# Install the latest kubectl binary in Linux
+#
+# - The 'kubectl' tool controls the Kubernetes cluster:
+# https://kubernetes.io/docs/reference/kubectl/kubectl/
+# https://kubernetes.io/docs/reference/kubectl/overview/
+#
+# - Linux is a family of open-source Unix-like operating systems based on
+# the Linux kernel:
+# https://www.kernel.org/category/about.html
+
+
+# define global scope variables
 main_url="https://storage.googleapis.com/kubernetes-release/release/"
 latest_vers_url="${main_url}stable.txt"
 temp_dir="/tmp"
