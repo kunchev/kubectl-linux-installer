@@ -23,7 +23,6 @@ https://docs.python.org/3/license.html
 __author__ = 'Petyo Kunchev'
 __version__ = '1.0.1'
 __maintainer__ = 'Petyo Kunchev'
-__email__ = 'ptkunchev@gmail.com'
 __license__ = 'MIT'
 
 import os
