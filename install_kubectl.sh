@@ -12,14 +12,14 @@ set -eo pipefail
 # https://www.kernel.org/category/about.html
 
 
-# define global scope variables
+# define global scope script variables
 main_url="https://storage.googleapis.com/kubernetes-release/release/"
 latest_vers_url="${main_url}stable.txt"
 temp_dir="/tmp"
 path_dir="/usr/local/bin/"
 
 
-# check operating system:
+# check the running operating system:
 on_name=$(uname -s | tr '[:upper]' '[:lower]')
 if [ "${os_name}" = "linux" ]; then
   arch=$(uname -m | tr '[:upper]' '[:lower]')

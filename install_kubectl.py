@@ -21,7 +21,7 @@ https://docs.python.org/3/license.html
 #  red for error messages and blue for informational messages
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.0'
+__version__ = '1.0.1'
 __maintainer__ = 'Petyo Kunchev'
 __email__ = 'ptkunchev@gmail.com'
 __license__ = 'MIT'
@@ -37,25 +37,25 @@ try:
     import requests
     from requests.models import Response
 except ModuleNotFoundError as err:
-    print('pip3 install -r requirements.txt')
+    print('pip install -r requirements.txt')
     exit(err)
 
 
-class KubectlInstallation:
+class KubectlInstallation(object):
     """kubectl installation class"""
 
     # URL with the latest kubectl version string
     version_url: str = 'https://storage.googleapis.com/kubernetes-release' \
                        '/release/stable.txt'
 
-    # get the latest version into a variable
+    # get and assign the latest kubectl version in a variable
     latest_kube: Response = requests.get(version_url)
 
-    # construct the kubectl latest download URL
+    # construct the kubectl latest version download URL
     url: str = 'https://storage.googleapis.com/kubernetes-release/release/' + \
                latest_kube.text + '/bin/linux/amd64/kubectl'
 
-    # local temporary download location
+    # local filesystem temporary download location for kubectl
     templocation: str = '/tmp/kubectl'
 
     # local folder to move the kubectl binary package (must be in $PATH)
