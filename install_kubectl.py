@@ -20,10 +20,12 @@ https://docs.python.org/3/license.html
 # TODO: Implement color print based on message type - green for ok,
 #  red for error messages and blue for informational messages
 
+
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 __maintainer__ = 'Petyo Kunchev'
 __license__ = 'MIT'
+
 
 import os
 import urllib.request
@@ -41,7 +43,7 @@ except ModuleNotFoundError as err:
 
 
 class KubectlInstallation(object):
-    """kubectl installation class"""
+    """KubectlInstallation installation class"""
 
     # URL with the latest kubectl version string
     version_url: str = 'https://storage.googleapis.com/kubernetes-release' \
@@ -63,11 +65,13 @@ class KubectlInstallation(object):
     @property
     def running_os(self) -> object:
         """:return: the running operating system"""
+
         return platform
 
     @property
     def running_id(self) -> object:
         """:return: the running user ID"""
+
         return os.getuid()
 
     def get_kubectl(self):
@@ -101,20 +105,11 @@ class KubectlInstallation(object):
 def main():
     """Wrap up everything into the main function."""
 
-    # create object from the KubectlInstallation class
-    this_setup = KubectlInstallation()
-
-    # define the required operating system (Linux)
-    rq_os: str = 'linux'
-
-    # define required user id (root)
-    rq_id: str = '0'
-
-    # get currently running os
-    rn_os: str = str(this_setup.running_os)
-
-    # get currently running user
-    rn_id: str = str(this_setup.running_id)
+    this_setup = KubectlInstallation()  # KubectlInstallation instance
+    rq_os: str = 'linux'  # define the required operating system (Linux)
+    rq_id: str = '0'  # define required user id (root)
+    rn_os: str = str(this_setup.running_os)  # get currently running os
+    rn_id: str = str(this_setup.running_id)  # get current user
 
     # check if operating system and user id requirements are met
     if rn_os != rq_os or rn_id != rq_id:
