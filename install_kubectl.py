@@ -1,7 +1,8 @@
-#! /usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""This script will install kubectl latest on GNU/Linux.
+"""
+This Python script will install kubectl latest on GNU/Linux.
 
 - The 'kubectl' tool controls the Kubernetes cluster:
 https://kubernetes.io/docs/reference/kubectl/kubectl/
@@ -22,7 +23,7 @@ https://docs.python.org/3/license.html
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 __maintainer__ = 'Petyo Kunchev'
 __license__ = 'MIT'
 
@@ -43,7 +44,7 @@ except ModuleNotFoundError as err:
 
 
 class KubectlInstallation(object):
-    """KubectlInstallation installation class"""
+    """KubectlInstallation installation class."""
 
     # URL with the latest kubectl version string
     version_url: str = 'https://storage.googleapis.com/kubernetes-release' \
@@ -77,7 +78,7 @@ class KubectlInstallation(object):
     def get_kubectl(self):
         """Download and install the latest kubectl for Linux."""
 
-        # 1. download kubectl to temporary location
+        # download kubectl to temporary location
         print(f'[STEP 1]: Starting download of the latest kubectl version'
               f' \'{self.latest_kube.text}\' from:\n{self.url}')
         try:
@@ -85,17 +86,17 @@ class KubectlInstallation(object):
         except urllib.error.URLError as e:
             exit(e.reason)
 
-        # 2. make the downloaded file executable (775)
+        # make the downloaded file executable (775)
         print(f'[STEP 2]: Making the downloaded binary file \''
               f'{self.templocation}\' executable (mode 775)')
         os.chmod(self.templocation, 0o775)
 
-        # 3. move the downloaded file to the desired bin folder
+        # move the downloaded file to the desired bin folder
         print(f'[STEP 3]: Moving \'{self.templocation}\' to the \''
               f'{self.binlocation}\' destination')
         shutil.move(self.templocation, self.binlocation)
 
-        # 4. verify the installed version of kubectl
+        # verify the installed version of kubectl
         print('[STEP 4]: Verifying the kubectl installed version:')
         verify_kubectl_version = subprocess.run([self.binlocation, 'version',
                                                  '--client'])
@@ -116,7 +117,7 @@ def main():
         exit(f'[ERROR]: Running on {rn_os} with {rn_id}, must run on {rq_os} '
              f'with user id {rq_id} please check. Exiting...')
     else:
-        # if conditions are met, run the installation
+        # if conditions are met, run the  kubectl installation
         print(f'Install version: {this_setup.latest_kube.text}')
         print(f'Operating system is: {rn_os}')
         print(f'User ID is: {rn_id}')
