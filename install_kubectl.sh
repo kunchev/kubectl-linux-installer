@@ -19,7 +19,7 @@ temp_dir="/tmp"
 path_dir="/usr/local/bin/"
 
 
-# check the running operating system:
+# check the running operating system family:
 on_name=$(uname -s | tr '[:upper]' '[:lower]')
 if [ "${os_name}" = "linux" ]; then
   arch=$(uname -m | tr '[:upper]' '[:lower]')
@@ -43,16 +43,16 @@ else
   exit 1
 fi
 
-# check if curl is present on the system:
+# check if curl command is present on the system:
 if ! command -v curl &> /dev/null; then
   echo ">> curl could not be found. Exiting..."
   exit 1
 fi
 
-# make sure to always use sudo, if not running script as root:
+# in case not running as root, make sure to run using sudo:
 [ "$(id -u)" -ne 0 ] && SUDO=sudo || SUDO=""
 
-# download the kubectl binary:
+# download the kubectl binary from the official site:
 cd ${temp_dir} || exit
 echo ">> Downloading kubectl $(curl -s ${latest_ver_url}) ..."
 if curl -s -LO "${main_url}"$(curl -s ${latest_ver_url})/bin/linux/amd64/kubectl"; then
