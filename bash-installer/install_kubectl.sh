@@ -1,25 +1,29 @@
 #!/usr/bin/env bash
+
 set -eo pipefail
 
+
+#
 # Install the latest kubectl binary in Linux
 #
 # - The 'kubectl' tool controls the Kubernetes cluster:
 # https://kubernetes.io/docs/reference/kubectl/kubectl/
 # https://kubernetes.io/docs/reference/kubectl/overview/
 #
-# - Linux is a family of open-source Unix-like operating systems based on
-# the Linux kernel:
+# - Linux is a family of open-source Unix-like operating systems
+# based on the Linux kernel:
 # https://www.kernel.org/category/about.html
+#
 
 
-# define global scope script variables
+# Define global scope script variables
 main_url="https://storage.googleapis.com/kubernetes-release/release/"
 latest_vers_url="${main_url}stable.txt"
 temp_dir="/tmp"
 path_dir="/usr/local/bin/"
 
 
-# check the running operating system family:
+# Check the running operating system family:
 on_name=$(uname -s | tr '[:upper]' '[:lower]')
 if [ "${os_name}" = "linux" ]; then
   arch=$(uname -m | tr '[:upper]' '[:lower]')
@@ -43,13 +47,13 @@ else
   exit 1
 fi
 
-# check if curl command is present on the system:
+# Check if curl command is present on the system:
 if ! command -v curl &> /dev/null; then
   echo ">> curl could not be found. Exiting..."
   exit 1
 fi
 
-# in case not running as root, make sure to run using sudo:
+# In case not running as root, make sure to run using sudo:
 [ "$(id -u)" -ne 0 ] && SUDO=sudo || SUDO=""
 
 # download the kubectl binary from the official site:
@@ -62,10 +66,10 @@ else
   exit 1
 fi
 
-# make the kubectl binary executable
+# Make the kubectl binary executable
 chmod +x ./kubectl
 
-# move the binary from the current working folder in PATH:
+# Move the binary from the current working folder in PATH:
 if $SUDO sudo mv ./kubectl ${path_dir}kubectl; then
   echo ">> Install complete."
   exit 0
