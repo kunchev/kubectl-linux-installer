@@ -18,12 +18,14 @@ https://en.wikipedia.org/wiki/Python_Software_Foundation_License
 https://docs.python.org/3/license.html
 """
 
-# TODO: Implement color print based on message type - green for ok,
-#  red for error messages and blue for informational messages
+# TODO: Implement color print based on message type:
+# - green for 'ok' statusses
+# - red for 'error' messages
+# - blue for 'informational' messages
 
 
 __author__ = 'Petyo Kunchev'
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 __maintainer__ = 'Petyo Kunchev'
 __license__ = 'MIT'
 
@@ -44,7 +46,7 @@ except ModuleNotFoundError as err:
 
 
 class KubectlInstallation(object):
-    """KubectlInstallation installation class."""
+    """KubectlInstallation installation class"""
 
     # URL with the latest kubectl version string
     version_url: str = 'https://storage.googleapis.com/kubernetes-release' \
@@ -57,10 +59,10 @@ class KubectlInstallation(object):
     url: str = 'https://storage.googleapis.com/kubernetes-release/release/' + \
                latest_kube.text + '/bin/linux/amd64/kubectl'
 
-    # local filesystem temporary download location for kubectl
+    # local filesystem temporary download location for the binary package
     templocation: str = '/tmp/kubectl'
 
-    # local folder to move the kubectl binary package (must be in $PATH)
+    # local filesystem location to move the kubectl binary package (goot to be in $PATH)
     binlocation: str = '/usr/local/bin/kubectl'
 
     @property
@@ -76,7 +78,7 @@ class KubectlInstallation(object):
         return os.getuid()
 
     def get_kubectl(self):
-        """Download and install the latest kubectl for Linux."""
+        """Download and install the latest kubectl for Linux"""
 
         # download kubectl to temporary location
         print(f'[STEP 1]: Starting download of the latest kubectl version'
@@ -104,7 +106,7 @@ class KubectlInstallation(object):
 
 
 def main():
-    """Wrap up everything into the main function."""
+    """Wrap up everything into the main function"""
 
     this_setup = KubectlInstallation()  # KubectlInstallation instance
     rq_os: str = 'linux'  # define the required operating system (Linux)
