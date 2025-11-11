@@ -16,7 +16,7 @@ set -eo pipefail
 #
 
 
-# Define global scope script variables
+# Define global scope script variables:
 main_url="https://storage.googleapis.com/kubernetes-release/release/"
 latest_vers_url="${main_url}stable.txt"
 temp_dir="/tmp"
@@ -53,10 +53,10 @@ if ! command -v curl &> /dev/null; then
   exit 1
 fi
 
-# In case not running as root, make sure to run using sudo:
+# In case the scriot is not running as root, make sure to use sudo:
 [ "$(id -u)" -ne 0 ] && SUDO=sudo || SUDO=""
 
-# download the kubectl binary from the official site:
+# Download the kubectl binary from the official site:
 cd ${temp_dir} || exit
 echo ">> Downloading kubectl $(curl -s ${latest_ver_url}) ..."
 if curl -s -LO "${main_url}"$(curl -s ${latest_ver_url})/bin/linux/amd64/kubectl"; then
@@ -66,7 +66,7 @@ else
   exit 1
 fi
 
-# Make the kubectl binary executable
+# Make the kubectl binary executable:
 chmod +x ./kubectl
 
 # Move the binary from the current working folder in PATH:
